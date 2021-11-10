@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title></title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+table, td, th {  
+ border: 1px solid #ddd;
+ text-align: left;
+}
+table{
+ border-collapse: collapse;
+ width: 50%;
+}
+.table-data{
+  overflow-x:auto;
+}
+th, td {
+  padding: 15px;
+}
+ </style>
+</head>
+<body>
+
+  <!-- <%= userid %> -->
+
+  <form action="/store-image/<%= userid %>" method="POST" enctype="multipart/form-data">
+    <label>Store Image</label><br><br>
+    <p><%=(typeof alertMsg!='undefined')? alertMsg:''%></p>
+    <input type="file"  name="image" multiple>
+    <button type="submit">Upload</button>
+  </form>
+
+    <div class="table-data">
+    <table border="1" >
+        <tr>
+            <th>S.N</th>
+            <th>Full Name</th>
+            <th>Email Address</th>
+            <th>Total Order</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            <th>User Image</th>
+        </tr>
+        
+        <%
+        if(fetchData.length!=0){
+        var i=1;
+        fetchData.forEach(function(data){
+        %>
+        <tr>
+            <td><%=i; %></td>
+            <td><%=data.user_name %></td>
+            <td><%=data.user_email %></td>
+            
+            <td><%=data.total_order%></td>
+            <td><a href="/crud/edit/<%=data.user_id%>">Edit</a></td>
+            <td><a href="/crud/delete/<%=data.user_id%>">Delete</a></td>
+            <td><a href="/display-image/<%=data.user_id%>">Image</a></td>
+        </tr>
+        <%  i++; }) %>
+        <% } else{ %>
+            <tr>
+                <td colspan="7">No Data Found</td>
+            </tr>
+        <% } %>
+    </table>
+    </div>
+</body>
+</html>
